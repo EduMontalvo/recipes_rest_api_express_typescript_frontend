@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./layout/Layout";
 import Recipes from "./views/Recipes";
-import NewRecipe from "./views/NewRecipe";
+import NewRecipe, { action as AddNewRecipe} from "./views/NewRecipe";
 import Home from "./views/Home";
 
 export const router = createBrowserRouter([
     {
-        path: '/',
+        path: '/recetas',
         element: <Layout />,
         children: [
             {
@@ -14,13 +14,14 @@ export const router = createBrowserRouter([
                 element:<Recipes/>
             },
             {
-                path: 'receta/nueva',
-                element: <NewRecipe/>
+                path: 'nueva',
+                element: <NewRecipe/>,
+                action: AddNewRecipe
             }
         ]
     },
     {
-        path:'home',
+        path:'/',
         element: <Home/>
     }
 ]) 

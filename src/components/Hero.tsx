@@ -28,7 +28,7 @@ export default function Hero() {
                     <p className="text-white text-xl font-light w-96 mt-16">Unlock a world of a variety culinary recipes and unleash your inner chef the easy way with Flavoris.</p>
 
                     <div className="grid grid-cols-2 gap-4 w-96">
-                        <Link to="/receta/nueva" className="text-center py-3 border-1 border-white text-white rounded-full">Agregar Recetas</Link>
+                        <Link to="/recetas/nueva" className="text-center py-3 border-1 border-white text-white rounded-full">Agregar Recetas</Link>
                         <Link to="/recetas" className="text-center py-3 bg-white text-black  rounded-full">Ver Recetas</Link>
                     </div>
                 </div>
