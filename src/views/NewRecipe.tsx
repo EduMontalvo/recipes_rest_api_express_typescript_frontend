@@ -1,10 +1,9 @@
 import { ActionFunctionArgs, Form, Link, useActionData, redirect } from "react-router-dom";
 import ErrorMessage from "../components/ErrorMessage";
-import { AddProduct } from "../services/ProductService";
+import { AddRecipe } from "../services/ProductService";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
     const data = Object.fromEntries(await request.formData())
-    console.log(data.quantity)
     let error = ''
     if (Object.values(data).includes('')) {
         error = 'Todos los campos son obligatorios'
@@ -14,8 +13,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     if (error.length) {
         return error
     }
-    await AddProduct(data)
-    return redirect('/recetas')
+    await AddRecipe(data)
+    return {}
 }
 export default function NewRecipe() {
 
