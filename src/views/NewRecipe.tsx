@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, Form, Link, useActionData, redirect } from "react-router-dom";
 import ErrorMessage from "../components/ErrorMessage";
-import { AddRecipe } from "../services/ProductService";
+import { addRecipe } from "../services/ProductService";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
     const data = Object.fromEntries(await request.formData())
@@ -13,8 +13,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     if (error.length) {
         return error
     }
-    await AddRecipe(data)
-    return {}
+    await addRecipe(data)
+    return redirect('/recetas')
 }
 export default function NewRecipe() {
 

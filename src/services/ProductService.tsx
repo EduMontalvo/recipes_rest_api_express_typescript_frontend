@@ -1,12 +1,12 @@
-import { safeParse } from "valibot";
-import { DraftRecipeSchema } from "../types";
-import axios from "axios";
+import { safeParse } from "valibot"
+import { DraftRecipeSchema } from "../types"
+import axios from "axios"
 
-type AddRecipeProps = {
-    [k: string]: FormDataEntryValue;
+type addRecipeProps = {
+    [k: string]: FormDataEntryValue
 }
 
-export const AddRecipe = async (data: AddRecipeProps) => {
+export const addRecipe = async (data: addRecipeProps) => {
     try {
         const result = safeParse(DraftRecipeSchema, {
             name: data.name,
@@ -14,17 +14,14 @@ export const AddRecipe = async (data: AddRecipeProps) => {
             ingredients: data.ingredients,
             preparation: data.preparation
         })
-
         if (result.success) {
             const url = `${import.meta.env.VITE_API_URL}/api/recipes`
-            const {data} = await axios.post(url,{
-                name:result.output.name,
-                quantity:result.output.quantity,
-                ingredients:result.output.ingredients,
-                preparation:result.output.preparation,
+            await axios.post(url, {
+                name: result.output.name,
+                quantity: result.output.quantity,
+                ingredients: result.output.ingredients,
+                preparation: result.output.preparation
             })
-        }else{
-            throw new Error('Datos no validos')
         }
     } catch (error) {
         console.log(error)
