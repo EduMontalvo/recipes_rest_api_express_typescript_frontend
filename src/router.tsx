@@ -3,7 +3,7 @@ import Layout from "./layout/Layout";
 import Recipes, { loader as recipeLoader } from "./views/Recipes";
 import NewRecipe, { action as newRecipeAction} from "./views/NewRecipe";
 import Home from "./views/Home";
-import EditRecipe from "./views/EditRecipe";
+import EditRecipe, { loader as editrecipeLoader } from "./views/EditRecipe";
 
 export const router = createBrowserRouter([
     {
@@ -16,13 +16,14 @@ export const router = createBrowserRouter([
                 loader: recipeLoader
             },
             {
-                path: 'nueva',
+                path: 'receta/nueva',
                 element: <NewRecipe/>,
                 action: newRecipeAction
             },
             {
-                path:'editar',
-                element: <EditRecipe/>
+                path:'receta/:id/editar',
+                element: <EditRecipe/>,
+                loader: editrecipeLoader
             }
         ]
     },

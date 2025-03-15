@@ -16,6 +16,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     await addRecipe(data)
     return redirect('/recetas')
 }
+
+export const loader = async () => {
+    console.log('desde Loader Edit Recipes')
+}
+
+
+
+
+const revisedEstatus = ['No revisado', 'Revisado']
 export default function EditRecipe() {
 
     const error = useActionData() as string
@@ -41,6 +50,8 @@ export default function EditRecipe() {
                                 <textarea id="ingredients" name="ingredients" placeholder="Ej: 1kg de carne, 1kg de verduras" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 resize-none" />
                                 <label htmlFor="preparation" className="font-semibold">Preparación:</label>
                                 <textarea id="preparation" name="preparation" placeholder="Ej: Lavar la carne, cortarla y cocinarla" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 resize-none" />
+                                <label htmlFor="revised">Revisado</label>
+                                <input type="checkbox" name="revised" id="revised" value={revisedEstatus[1]} />
                                 <input type="submit" value={'Agregar Receta'} className="text-center text-md font-normal w-full py-2 px-8 bg-gray-200 rounded-xs hover:bg-black hover:text-white cursor-pointer" />
                             </Form>
                         </div>
