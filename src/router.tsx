@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./layout/Layout";
-import Recipes from "./views/Recipes";
-import NewRecipe, { action as AddNewRecipe} from "./views/NewRecipe";
+import Recipes, { loader as recipeLoader } from "./views/Recipes";
+import NewRecipe, { action as newRecipeAction} from "./views/NewRecipe";
 import Home from "./views/Home";
+import EditRecipe from "./views/EditRecipe";
 
 export const router = createBrowserRouter([
     {
@@ -11,12 +12,17 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element:<Recipes/>
+                element:<Recipes/>,
+                loader: recipeLoader
             },
             {
                 path: 'nueva',
                 element: <NewRecipe/>,
-                action: AddNewRecipe
+                action: newRecipeAction
+            },
+            {
+                path:'editar',
+                element: <EditRecipe/>
             }
         ]
     },

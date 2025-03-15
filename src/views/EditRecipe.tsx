@@ -7,7 +7,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     let error = ''
     if (Object.values(data).includes('')) {
         error = 'Todos los campos son obligatorios'
-    }else if(+data.quantity <= 0) {
+    } else if (+data.quantity <= 0) {
         error = 'La cantidad debe ser mayor a 0'
     }
     if (error.length) {
@@ -16,7 +16,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     await addRecipe(data)
     return redirect('/recetas')
 }
-export default function NewRecipe() {
+export default function EditRecipe() {
 
     const error = useActionData() as string
 

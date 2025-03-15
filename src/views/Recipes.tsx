@@ -1,29 +1,68 @@
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import { getRecipes } from "../services/RecipeService";
+import { Product } from "../types";
+import Card from "../components/Card";
 
+export const loader = async () => {
+    const recipes = await getRecipes()
+    console.log(recipes)
+    return recipes
+}
 export default function Recipes() {
+    /* const [showMenu, setShowMenu] = useState(false)
+    const [showLinks, setShowLinks] = useState(false) */
+
+    /* const changeShowMenu = (showMenu: boolean) => {
+        if (showMenu) {
+            setShowMenu(false)
+        } else {
+            setShowMenu(true)
+        }
+    } */
+    /* useEffect(() => {
+        if (showMenu) {
+            const timer = setTimeout(() => {
+                setShowLinks(true)
+            }, 400);
+            return () => clearTimeout(timer)
+        } else {
+            setShowLinks(false)
+        }
+
+    }, [showMenu]) */
+
+    const recipesdata = useLoaderData() as Product[]
     return (
         <>
-            <div className="h-screen w-full flex flex-col items-center space-y-">
-                <h1 className="text-4xl font-bold mt-10 ">Lista de Recetas</h1>
-                <p className="text-gray-500 ">Aqui se mostraran la lista de todas las recetas de la base de datos</p>
-                <div className="flex justify-around items-center flex-wrap gap-y-10 w-[100%] h-screen px-6 py-4">
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
-                    <div className="bg-black w-[30%] h-[50%] text-white">hola</div>
+            <div className="h-full w-full">
+                <div className="flex flex-col px-15 w-[50%] mt-10">
+                    <h1 className="text-4xl font-bold">Lista de Recetas</h1>
+                    <p className="text-base mt-2">A continuación encontraras una lista de recetas disponibles en nuestra plataforma</p>
                 </div>
-                <div className="flex justify-center items-end h-full w-full p-4 fixed">
-                    <div className="w-[35%] h-[10%] py-10 shadow-2xl rounded-xl flex justify-around items-center bg-white opacity-100">
-                        <Link to="/" className="text-center text-md font-normal py-2 px-8 bg-gray-200 rounded-full hover:bg-black hover:text-white cursor-pointer">Regresar Home</Link>
-                        <Link to="/recetas/nueva" className="text-center text-md font-normal py-2 px-8 bg-gray-200 rounded-full hover:bg-black hover:text-white cursor-pointer">Agregar Receta</Link>
-                    </div>
+                <div className="flex justify-between items-center w-full px-15 mt-10 mb-6 ">
+                    <Link to="/" className="text-center text-md font-normal py-2 px-7 bg-gray-200 rounded-lg hover:bg-black hover:text-white cursor-pointer">Regresar Home</Link>
+                    <Link to="/recetas/nueva" className="text-center text-md font-normal py-2 px-7 bg-gray-200 rounded-lg hover:bg-black hover:text-white cursor-pointer">Agregar Receta</Link>
+                </div>
+                <div className="flex justify-around items-center flex-wrap gap-y-10 w-[100%] h-full px-6 pt-4 pb-10">
+                    {recipesdata.map((recipe) => (
+                        <div key={recipe.id}>
+                            <Card recipe={recipe} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </>
     )
 }
+
+{/* <div className="flex justify-center items-end h-full w-full p-4">
+                    <div className={`transition-all duration-300 ease-linear ${showMenu ? 'w-full h-[10%] md:w-[45%]  lg:w-[35%] lg:h-[12%] shadow-2xl rounded-2xl bg-white cursor-pointer flex justify-around items-center ' : 'rounded-full bg-white w-[18%] h-[8%] md:w-[7%] md:h-[10%] lg:w-[6%] lg:h-[12%] cursor-pointer flex justify-center text-2xl shadow-2xl '}`} onClick={() => changeShowMenu(showMenu)} >
+                        <MenuOutlined className={showMenu ? 'custom-hidden' : ''} />
+                        {showLinks && (
+                            <>
+                                <Link to="/" className="text-center text-md font-normal py-2 px-8 bg-gray-200 rounded-full hover:bg-black hover:text-white cursor-pointer">Regresar Home</Link>
+                                <Link to="/recetas/nueva" className="text-center text-md font-normal py-2 px-8 bg-gray-200 rounded-full hover:bg-black hover:text-white cursor-pointer">Agregar Receta</Link>
+                            </>
+                        )}
+                    </div>
+                </div> */}

@@ -1,5 +1,5 @@
 import { safeParse } from "valibot"
-import { DraftRecipeSchema } from "../types"
+import { DraftRecipeSchema, RecipesSchema } from "../types"
 import axios from "axios"
 
 type addRecipeProps = {
@@ -27,3 +27,19 @@ export const addRecipe = async (data: addRecipeProps) => {
         console.log(error)
     }
 }
+
+export const getRecipes = async () => {
+    try {
+        const url = `${import.meta.env.VITE_API_URL}/api/recipes`
+        const { data } = await axios.get(url)
+        const result = safeParse(RecipesSchema, data.data)
+        if (result.success) {
+            return result.output
+        } else {
+            throw new Error('Ocurrio un problema ...')
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
