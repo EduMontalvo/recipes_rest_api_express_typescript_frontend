@@ -42,13 +42,13 @@ export default function Recipes() {
                     <Link to="/" className="text-center text-md font-normal py-2 px-7 bg-gray-200 rounded-lg hover:bg-black hover:text-white cursor-pointer">Regresar Home</Link>
                     <Link to="/recetas/receta/nueva" className="text-center text-md font-normal py-2 px-7 bg-gray-200 rounded-lg hover:bg-black hover:text-white cursor-pointer">Agregar Receta</Link>
                 </div>
-                <div className="flex justify-around items-center flex-wrap gap-y-10 w-[100%] h-full px-6 pt-4 pb-10">
+                {recipesdata && <div className="flex justify-around items-center flex-wrap gap-y-10 w-[100%] h-full px-6 pt-4 pb-10">
                     {recipesdata.map((recipe) => (
                         <div key={recipe.id}>
                             <Card recipe={recipe} />
                         </div>
                     ))}
-                </div>
+                </div>}
             </div>
         </>
     )

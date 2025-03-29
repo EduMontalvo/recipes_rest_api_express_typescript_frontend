@@ -13,7 +13,8 @@ export const addRecipe = async (data: RecipeData) => {
             name: data.name,
             quantity: +data.quantity,
             ingredients: data.ingredients,
-            preparation: data.preparation
+            preparation: data.preparation,
+            imageURL: data.imageURL
         })
         if (result.success) {
             const url = `${import.meta.env.VITE_API_URL}/api/recipes`
@@ -21,7 +22,8 @@ export const addRecipe = async (data: RecipeData) => {
                 name: result.output.name,
                 quantity: result.output.quantity,
                 ingredients: result.output.ingredients,
-                preparation: result.output.preparation
+                preparation: result.output.preparation,
+                imageURL: result.output.imageURL
             })
         }
     } catch (error) {
