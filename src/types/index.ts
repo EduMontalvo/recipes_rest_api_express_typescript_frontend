@@ -18,4 +18,4 @@ export const RecipeSchema = object({
 
 export const RecipesSchema = array(RecipeSchema)
 
-export type Product = InferOutput<typeof RecipeSchema>
+export type Recipe = InferOutput<typeof RecipeSchema>

@@ -1,11 +1,10 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { getRecipes } from "../services/RecipeService";
-import { Product } from "../types";
+import { Recipe } from "../types";
 import Card from "../components/Card";
 
 export const loader = async () => {
     const recipes = await getRecipes()
-    console.log(recipes)
     return recipes
 }
 export default function Recipes() {
@@ -31,7 +30,7 @@ export default function Recipes() {
 
     }, [showMenu]) */
 
-    const recipesdata = useLoaderData() as Product[]
+    const recipesdata = useLoaderData() as Recipe[]
     return (
         <>
             <div className="h-full w-full">

@@ -1,8 +1,9 @@
-import { ActionFunctionArgs, Form, Link, useActionData, redirect } from "react-router-dom";
+import { ActionFunctionArgs, Form, Link, useActionData, redirect, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 import ErrorMessage from "../components/ErrorMessage";
-import { addRecipe } from "../services/RecipeService";
+import { getRecipeByID, updateRecipe } from "../services/RecipeService";
+import { Recipe } from "../types";
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request, params }: ActionFunctionArgs) => {
     const data = Object.fromEntries(await request.formData())
     let error = ''
     if (Object.values(data).includes('')) {
@@ -13,20 +14,34 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     if (error.length) {
         return error
     }
-    await addRecipe(data)
+    if (params.id !== undefined) {
+        await updateRecipe(data, +params.id)
+    }
     return redirect('/recetas')
 }
 
-export const loader = async () => {
-    console.log('desde Loader Edit Recipes')
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+    if (params.id !== undefined) {
+        const recipe = await getRecipeByID(+params.id)
+        if (!recipe) {
+            return redirect('/recetas')
+        } else {
+            return recipe
+        }
+    }
 }
-
-
-
-
-const revisedEstatus = ['No revisado', 'Revisado']
+const revisedOptions = [
+    {
+        name: 'Revisado',
+        value: true
+    },
+    {
+        name: 'No Revisado',
+        value: false
+    }
+]
 export default function EditRecipe() {
-
+    const recipe = useLoaderData() as Recipe
     const error = useActionData() as string
 
     return (
@@ -36,23 +51,27 @@ export default function EditRecipe() {
                     <Link to="/recetas" className="text-center py-2 px-4 bg-white text-black rounded-lg shadow hover:bg-black hover:text-white cursor-pointer">Regresar a Recetas</Link>
                 </div>
                 <div className="h-[90%] w-full">
-                    <div className="bg-white grid grid-cols-2 w-[65%] h-[92%] m-auto rounded-2xl shadow-2xl">
-                        <div className="flex flex-col justify-center items-center">
+                    <div className="bg-white grid grid-cols-2 w-[70%] h-[92%] m-auto rounded-2xl shadow-2xl">
+                        <div className="flex flex-col justify-center items-center px-4">
                             <Form method="POST" className="space-y-2">
-                                <h2 className="text-3xl font-bold">Agregar Receta</h2>
-                                <p className="text-gray-500">Llena el formulario para agregar una nueva receta</p>
+                                <h2 className="text-3xl font-bold">Editar Receta</h2>
+                                <p className="text-gray-500">Edita los campos que desees para actualiazar la receta</p>
                                 {error && <ErrorMessage>{error}</ErrorMessage>}
                                 <label htmlFor="name" className="font-semibold">Nombre de la receta:</label>
-                                <input type="text" id="name" name="name" placeholder="Ej: Lomo saltado" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" />
+                                <input type="text" id="name" name="name" placeholder="Ej: Lomo saltado" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" defaultValue={recipe.name} />
                                 <label htmlFor="quantity" className="font-semibold">Cantidad de personas:</label>
-                                <input type="number" id="quantity" name="quantity" placeholder="Ej: 2 personas" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" />
+                                <input type="number" id="quantity" name="quantity" placeholder="Ej: 2 personas" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" defaultValue={recipe.quantity} />
                                 <label htmlFor="ingredients" className="font-semibold">Ingredientes:</label>
-                                <textarea id="ingredients" name="ingredients" placeholder="Ej: 1kg de carne, 1kg de verduras" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 resize-none" />
+                                <textarea id="ingredients" name="ingredients" placeholder="Ej: 1kg de carne, 1kg de verduras" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 resize-none" defaultValue={recipe.ingredients} />
                                 <label htmlFor="preparation" className="font-semibold">Preparación:</label>
-                                <textarea id="preparation" name="preparation" placeholder="Ej: Lavar la carne, cortarla y cocinarla" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 resize-none" />
-                                <label htmlFor="revised">Revisado</label>
-                                <input type="checkbox" name="revised" id="revised" value={revisedEstatus[1]} />
-                                <input type="submit" value={'Agregar Receta'} className="text-center text-md font-normal w-full py-2 px-8 bg-gray-200 rounded-xs hover:bg-black hover:text-white cursor-pointer" />
+                                <textarea id="preparation" name="preparation" placeholder="Ej: Lavar la carne, cortarla y cocinarla" className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 resize-none" defaultValue={recipe.preparation} />
+                                <label htmlFor="revised">Estado</label>
+                                <select name="revised" id="revised" defaultValue={recipe.revised.toString()}>
+                                    {revisedOptions.map(option => (
+                                        <option key={option.name} value={option.value.toString()}>{option.name}</option>
+                                    ))}
+                                </select>
+                                <input type="submit" value={'Actualizar Receta'} className="text-center text-md font-normal w-full py-2 px-8 bg-gray-200 rounded-xs hover:bg-black hover:text-white cursor-pointer" />
                             </Form>
                         </div>
                         <div className="">

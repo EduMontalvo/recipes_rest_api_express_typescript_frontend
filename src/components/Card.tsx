@@ -1,9 +1,9 @@
 import { FormOutlined } from "@ant-design/icons"
-import { Product } from "../types"
+import { Recipe } from "../types"
 import { useNavigate } from "react-router-dom"
 
 type CardProps = {
-    recipe: Product
+    recipe: Recipe
 }
 export default function Card({ recipe }: CardProps) {
     const navigate = useNavigate()
