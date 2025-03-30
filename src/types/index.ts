@@ -4,7 +4,8 @@ export const DraftRecipeSchema = object({
     name: string(),
     quantity: number(),
     ingredients: string(),
-    preparation: string()
+    preparation: string(),
+    imageURL: string(),
 })
 
 export const RecipeSchema = object({
@@ -13,6 +14,7 @@ export const RecipeSchema = object({
     quantity: number(),
     ingredients: string(),
     preparation: string(),
+    imageURL: string(),
     revised: boolean()
 })
 
