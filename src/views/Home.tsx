@@ -1,9 +1,13 @@
 import { useLoaderData } from "react-router-dom";
 import Hero from "../components/Hero";
 import MiddleSection from "../components/MiddleSection";
-import PopularRecipes from "../components/PopularRecipes";
 import { getRecipeByID, getRecipes } from "../services/RecipeService";
 import { Recipe } from "../types";
+import Courusel from "../components/Courusel";
+import PopularRecipes from "../components/PopularRecipes";
+import Information from "../components/Information";
+import Footer from "../components/Footer";
+import InitialSection from "../components/InitialSection";
 
 export const loader = async () => {
 
@@ -43,7 +47,11 @@ export default function Home() {
             <main>
                 <Hero />
                 <MiddleSection />
-                <PopularRecipes recipesForToday={recipesForToday} />
+                <InitialSection />
+                <Courusel recipesForToday={recipesForToday} />
+                <Information />
+                <Footer />
+                {/* <PopularRecipes recipesForToday={recipesForToday} /> */}
             </main>
         </>
     )

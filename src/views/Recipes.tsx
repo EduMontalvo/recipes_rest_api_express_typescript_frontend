@@ -33,22 +33,25 @@ export default function Recipes() {
     const recipesdata = useLoaderData() as Recipe[]
     return (
         <>
-            <div className="h-full w-full">
-                <div className="flex flex-col px-15 w-[50%] mt-10">
+            <div className="h-full w-full relative">
+                <img src="https://images.pexels.com/photos/349609/pexels-photo-349609.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" className="absolute top-0 left-0 w-full h-full object-center" />
+                <div className="flex flex-col px-15 w-[50%] pt-10 relative">
                     <h1 className="text-4xl font-bold">Lista de Recetas</h1>
                     <p className="text-base mt-2">A continuación encontraras una lista de recetas disponibles en nuestra plataforma</p>
                 </div>
-                <div className="flex justify-between items-center w-full px-15 mt-10 mb-6 ">
+                <div className="flex justify-between items-center w-full px-15 mt-10 mb-6 relative">
                     <Link to="/" className="text-center text-md font-normal py-2 px-7 bg-gray-200 rounded-lg hover:bg-black hover:text-white cursor-pointer">Regresar Home</Link>
                     <Link to="/recetas/receta/nueva" className="text-center text-md font-normal py-2 px-7 bg-gray-200 rounded-lg hover:bg-black hover:text-white cursor-pointer">Agregar Receta</Link>
                 </div>
-                {recipesdata && <div className="flex justify-around items-center flex-wrap gap-y-10 w-[100%] h-full px-6 pt-4 pb-10">
-                    {recipesdata.map((recipe) => (
-                        <div key={recipe.id}>
-                            <Card recipe={recipe} />
-                        </div>
-                    ))}
-                </div>}
+                <div className="relative">
+                    {recipesdata && <div className="flex justify-around items-center flex-wrap gap-y-10 w-[100%] h-full px-6 pt-4 pb-10">
+                        {recipesdata.map((recipe) => (
+                            <div key={recipe.id}>
+                                <Card recipe={recipe} />
+                            </div>
+                        ))}
+                    </div>}
+                </div>
             </div>
         </>
     )

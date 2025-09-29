@@ -14,7 +14,8 @@ export const addRecipe = async (data: RecipeData) => {
             quantity: +data.quantity,
             ingredients: data.ingredients,
             preparation: data.preparation,
-            imageURL: data.imageURL
+            imageURL: data.imageURL,
+            difficulty: data.difficulty
         })
         if (result.success) {
             const url = `${import.meta.env.VITE_API_URL}/api/recipes`
@@ -23,7 +24,8 @@ export const addRecipe = async (data: RecipeData) => {
                 quantity: result.output.quantity,
                 ingredients: result.output.ingredients,
                 preparation: result.output.preparation,
-                imageURL: result.output.imageURL
+                imageURL: result.output.imageURL,
+                difficulty: result.output.difficulty
             })
         }
     } catch (error) {
@@ -72,8 +74,11 @@ export const updateRecipe = async (data: RecipeData, id: Recipe['id']) => {
             quantity: +data.quantity,
             ingredients: data.ingredients,
             preparation: data.preparation,
-            revised: toBoolean(data.revised.toString())
+            imageURL: data.imageURL,
+            revised: toBoolean(data.revised.toString()),
+            difficulty: data.difficulty
         })
+        console.log(result)
         if (result.success) {
             await axios.put(url,result.output)
         } else {
